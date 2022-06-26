@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import TodoCard from "./components/TodoCard";
 import { v4 as uuidv4 } from "uuid";
+import { audioClick } from "./assets/audio/audio";
 
 const initialState = todos;
 
@@ -50,14 +51,17 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const onDeleteHandler = useCallback((id) => {
+    audioClick.play()
     dispatch({ type: "REMOVE", payload: id });
   }, []);
   const onCompleteHandler = useCallback((id) => {
+    audioClick.play()
     dispatch({ type: "COMPLETED", payload: id });
   }, []);
 
   const onSubmitHandler = useCallback((e) => {
     e.preventDefault();
+    audioClick.play()
     dispatch({ type: "SUBMIT" });
     setTitle("");
   }, []);
