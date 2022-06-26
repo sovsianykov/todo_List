@@ -49,7 +49,7 @@ const TodoCard: FunctionComponent<TodoProps> = ({ todo, onClick,onComplete }) =>
             color={todo.completed ? "success" : "error"}
             onClick={onCompletedHandler}
             variant="text"
-            sx={{width: 120}}
+            sx={{width: 130}}
           >
             { todo.completed ? <CheckIcon/> : "uncompleted"}
           </Button>
