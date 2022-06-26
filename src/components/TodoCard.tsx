@@ -1,10 +1,10 @@
-import React, { FunctionComponent, memo, useCallback, useState } from "react";
+import React, { FunctionComponent, memo, useCallback } from "react";
 import { Todo } from "../models/models";
+import CheckIcon from '@mui/icons-material/Check';
 import {
   Box,
   Button,
   ButtonGroup,
-  IconButton,
   Paper,
   Typography,
 } from "@mui/material";
@@ -12,28 +12,29 @@ import {
 interface TodoProps {
   todo: Todo;
   onClick(id: number | string): void;
+  onComplete(id: number | string): void;
+
 }
 
-const TodoCard: FunctionComponent<TodoProps> = ({ todo, onClick }) => {
-  const [isCompleted, setIsCompleted] = useState(todo.completed);
+const TodoCard: FunctionComponent<TodoProps> = ({ todo, onClick,onComplete }) => {
   const onClickHandler = useCallback(() => {
     onClick(todo.id);
   }, [todo.id]);
 
   const onCompletedHandler = useCallback(() => {
-    setIsCompleted((isCompleted) => !isCompleted);
-  }, [isCompleted]);
+    onComplete(todo.id)
+  }, [todo.id]);
 
   return (
-    <Paper sx={{ width: "600px", padding: 2, margin: "2px auto" }}>
-      <Box>
+    <Paper sx={{ width: "100%", margin: "2px auto" }}>
+      <Box p={2}>
         <Typography variant="h5" align="left">
           {todo.title}
         </Typography>
-        <Typography variant="h6" align="right">
-          id: {todo.id}
+        <Typography variant="body2" align="right">
+         Todo id: {todo.id}
         </Typography>
-        <Typography variant="h6" align="right">
+        <Typography variant="subtitle2" align="right">
           userId: {todo.userId}
         </Typography>
         <ButtonGroup>
@@ -41,18 +42,16 @@ const TodoCard: FunctionComponent<TodoProps> = ({ todo, onClick }) => {
             onClick={onClickHandler}
             variant="contained"
             color="error"
-            size={"small"}
           >
             remove
           </Button>
           <Button
-            color={isCompleted ? "primary" : "error"}
+            color={todo.completed ? "success" : "error"}
             onClick={onCompletedHandler}
             variant="text"
-            size={"small"}
-            sx={{width: 150, fontSize: 12}}
+            sx={{width: 120}}
           >
-            {isCompleted ? "completed" : "uncompleted"}
+            { todo.completed ? <CheckIcon/> : "uncompleted"}
           </Button>
         </ButtonGroup>
       </Box>
